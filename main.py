@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template
 app = Flask(__name__)
-
+app.static_folder = 'static'
 @app.route('/', methods=['GET', 'POST'])
 def home_page():
     if request.method=='GET':

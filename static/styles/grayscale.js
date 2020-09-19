@@ -1,59 +1,4 @@
 var state;
-var FEATURES = ["gpu", "provider", "region", "hours"];
-
-function getRandomInt(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-function selectAndCopyText(containerid) {
-  if (document.selection) { // IE
-    var range = document.body.createTextRange();
-    range.moveToElementText(document.getElementById(containerid));
-    range.select();
-    document.execCommand('copy');
-  } else if (window.getSelection) {
-    var range = document.createRange();
-    range.selectNode(document.getElementById(containerid));
-    window.getSelection().removeAllRanges();
-    window.getSelection().addRange(range);
-    document.execCommand('copy');
-  }
-}
-
-function findGetParameter(parameterName) {
-  var result = null, tmp = [];
-  location.search
-    .substr(1)
-    .split("&")
-    .forEach(function (item) {
-      tmp = item.split("=");
-      if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
-    });
-  return result;
-}
-
-function insertParam(kvp, key, value) {
-  key = encodeURI(key); value = encodeURI(value);
-  var i = kvp.length; var x; while (i--) {
-    x = kvp[i].split('=');
-
-    if (x[0] == key) {
-      x[1] = value;
-      kvp[i] = x.join('=');
-      break;
-    }
-  }
-  if (i < 0) { kvp[kvp.length] = [key, value].join('='); }
-  return kvp
-}
-
-function sc(id) {
-  $('html,body').animate({
-    scrollTop: $("#" + id).offset().top - parseInt($("#" + id).height() / 1.2)
-  }, 'slow');
-}
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
@@ -71,19 +16,6 @@ const setImports = (serveFrom, elType, attr) => {
   })
 }
 
-
-const getValues = () => {
-  const gpu = $("#compute-gpu option:selected").val();
-  const provider = $("#compute-provider option:selected").val();
-  const region = provider !== "custom" ? $("#compute-region option:selected").val() : null;
-  const customImpact = provider !== "custom" ? null : parseFloat($("#compute-custom-impact").val());
-  const customOffset = provider !== "custom" ? null : parseFloat($("#compute-custom-offset").val());
-  const hours = parseFloat($("#compute-hours").val());
-  return {
-    gpu, provider, region, hours, customImpact, customOffset
-  }
-}
-
 const scrollToBottomResultCard = () => {
   const cardOffset = $("#result-card").offset().top + $("#result-card").outerHeight() - $(window).height() + 50;
   $("html, body").animate({
@@ -92,143 +24,8 @@ const scrollToBottomResultCard = () => {
   return
 }
 
-const growDivOnArrowClick = (clickId, growId) => {
-  $(clickId).click(function () {
-    if (!$(this).find(".arrow-icon").hasClass("open")) {
-      var h = 0;
-      $(growId).children().each((k, v) => {
-        h += $(v).innerHeight()
-      })
-      $(growId).height(h);
-
-      setTimeout(() => {
-        if ($(window).height() > ($("#result-card").outerHeight() + 150) && !isBottomVisible()) {
-          scrollToBottomResultCard()
-        }
-      }, 500)
-
-    } else {
-      $(growId).height(0);
-      setTimeout(() => {
-        !isBottomVisible(50) && scrollToBottomResultCard();
-      }, 500);
-    }
-
-    $(this).find(".arrow-icon").toggleClass("open");
-  });
-}
-const growDivOnArrowClickLearn = (clickId, growId) => {
-  $(clickId).click(function () {
-    if (!$(this).find(".arrow-icon").hasClass("open")) {
-      var h = 0;
-      $(this).siblings(growId).children().each((k, v) => {
-        h += $(v).innerHeight()
-      })
-      $(this).siblings(growId).height(h);
-    } else {
-      $(this).siblings(growId).height(0);
-    }
-    $(this).find(".arrow-icon").toggleClass("open");
-  });
-}
-
-const check = (type, value) => {
-  $("#compute-hours").css("border", "");
-  switch (type) {
-    case "gpu":
-      console.log(state.gpus, value)
-      return state.gpus.filter((v, k) => { return v.name === value }).length;
-    case "hours":
-      return Number.isInteger(value) && value > 0 && value < 1e6;
-    case "provider":
-      return state.providers.filter((v, k) => { return v.name === value }).length;
-    case "region":
-      return state.regions.filter((v, k) => { return v.name === value }).length;
-    default:
-      return true;
-  }
-}
-
-const checkForm = () => {
-  const values = getValues();
-  const { gpu, provider, region, hours } = values;
-  let failed = false;
-
-  FEATURES.forEach((v, k) => {
-    if (!check(k, v)) {
-      fail(k)
-      failed = true;
-    }
-  });
-  if (failed) return null
-
-  return values;
-}
 
 const twoDigits = n => Number(Number(n).toFixed(2));
-
-const fillLatexTemplate = (provName, region, hours, gpu, gpuPower, emissions, offsetPercents, impact) => {
-  provName ? $("#template-text-offset").show() : $("#template-text-offset").hide();
-  $("#template-provider").text(provName || "a private infrastructure");
-  $("#template-region").text(region ? `in region ${region}` : "");
-  $("#template-region-efficiency").text(impact);
-  $("#template-hours").text(hours);
-  $("#template-gpu").text(gpu);
-  $("#template-gpu-power").text(gpuPower)
-  $("#template-emissions").text(emissions);
-  $("#template-percentage-offset").text(offsetPercents);
-}
-
-const setDetails = (values) => {
-  console.log({ values });
-  const { gpu, hours, provider, region, customImpact, customOffset } = values
-  const energy = twoDigits(state.gpus[gpu].watt * hours / 1000); // kWh
-  const impact = Number.isFinite(customImpact) ? customImpact : twoDigits(state.providers[provider][region].impact / 1000); // kg/kwH
-  const co2 = twoDigits(energy * impact);
-  const offset = Number.isFinite(customOffset) ? twoDigits(co2 * customOffset / 100) : twoDigits(co2 * state.providers[provider][region].offsetRatio / 100)
-  const offsetPercents = Number.isFinite(customOffset) ? twoDigits(customOffset) : twoDigits(state.providers[provider][region].offsetRatio)
-  const provName = Number.isFinite(customOffset) ? "" : state.providers[provider][region].providerName;
-  const minRegId = Number.isFinite(customOffset) ? "" : state.providers[provider].__min.region;
-  const minReg = Number.isFinite(customOffset) ? "" : state.providers[provider][minRegId];
-
-  fillLatexTemplate(provName, region, hours, gpu, state.gpus[gpu].watt, co2, offsetPercents, impact)
-
-  $("#emitted-value").text(co2);
-  $("#offset-value").text(offset);
-  $("#details-counts").html(`
-  ${state.gpus[gpu].watt}W x ${hours}h = <strong>${energy} kWh</strong> x ${impact}
-  kg  eq. CO<sub>2</sub>/kWh = <strong>${co2} kg eq. CO<sub>2</sub></strong>
-  `);
-  if (Number.isFinite(customOffset)) {
-    $("#details-min-region").html("");
-    $("#details-alternative").html("");
-    $("#details-alternative-content").show();
-    $("#compute-carbon-offset-title").html("Carbon offset");
-  } else {
-    $("#compute-carbon-offset-title").html("Carbon Already Offset by Provider")
-    if (region !== minRegId) {
-      const minco2 = twoDigits(energy * minReg.impact / 1000);
-      $("#details-min-selected").hide()
-      $("#details-alternative").html(
-        `
-        Had this model been run in ${provName}'s <strong>${minReg.regionName}</strong> region,
-        the carbon emitted would have been of <strong>${minco2}</strong> kg eq. CO<sub>2</sub>
-        `
-      )
-      $("#details-alternative").show()
-    } else {
-      $("#details-min-selected").show()
-      $("#details-alternative").hide()
-      $("#details-min-region").html(
-        `
-        You have selected ${provName}'s cleanest region!
-        `
-      )
-    }
-  }
-
-
-}
 
 const isBottomVisible = _bottomOffset => {
   const bottomOffset = _bottomOffset || 0;
@@ -296,31 +93,6 @@ const setRegions = provider => {
   }
 }
 
-const setInputs = () => {
-  for (const gpuName of Object.keys(state.gpus).sort()) {
-    const selected = gpuName === "Tesla V100" ? 'selected' : ''
-    $("#compute-gpu").append(`<option ${selected} value="${gpuName}">${gpuName}</option>`)
-  }
-  let prov;
-  let i = 0;
-  for (const provider in state.providers) {
-    if (i == 0) prov = provider;
-    i++;
-    if (state.providers.hasOwnProperty(provider)) {
-      let providerName;
-      for (const region in state.providers[provider]) {
-        if (state.providers[provider].hasOwnProperty(region) && region !== "__min") {
-          providerName = state.providers[provider][region]["providerName"];
-          break;
-        }
-      }
-      $("#compute-provider").append(`<option value="${provider}">${providerName}</option>`)
-    }
-  }
-  $("#compute-provider").append(`<option value="custom">Private Infrastructure</option>`)
-  setRegions(prov)
-}
-
 
 (async function ($) {
   "use strict"; // Start of use strict
@@ -346,15 +118,6 @@ const setInputs = () => {
   $('.js-scroll-trigger').click(function () {
     $('.navbar-collapse').collapse('hide');
   });
-
-  // // Activate scrollspy to add active class to navbar items on scroll
-  // $('body').scrollspy({
-  //   target: '#mainNav',
-  //   offset: 100
-  // });
-  // $('[data-spy="scroll"]').on('activate.bs.scrollspy', function () {
-  //   console.log(this);
-  // })
 
   // lazy load resources as images and iframes
   const observer = lozad();
@@ -383,26 +146,6 @@ const setInputs = () => {
   setInputs();
   setImports(serveFrom, "a", "href");
   setImports(serveFrom, "img", "src");
-  // $('select').selectize();
-
-  $("#compute-provider").change(e => {
-    const provider = $("#compute-provider option:selected").val();
-    setRegions(provider)
-  })
-
-  $("#compute-submit").click(() => {
-    $("#compute-form").submit()
-  })
-
-  $("#compute-form").submit(e => {
-    submitCompute();
-    return false;
-  })
-
-  // $(".compute-input").change(() => {
-  //   $("#compute-submit").prop("disabled", true);
-  //   if (checkForm()) $("#compute-submit").prop("disabled", false);
-  // })
 
   $(".details-summary").each((i, el) => {
 
@@ -429,17 +172,6 @@ const setInputs = () => {
   growDivOnArrowClickLearn(`.details-summary`, `.summary-content`);
   growDivOnArrowClick("#details-banner", "#details-content");
 
-  // $("#details-featured-maps").click()
-
-  // const response = await fetch("https://api.co2signal.com/v1/latest?lon=6.8770394&lat=45.9162776", {
-  //   credentials: "include",
-  //   headers: {
-  //     'Content-Type': 'application/jsonp',
-  //     'auth-token': 'c5f38468eddd9edb'
-  //   }
-  // })
-  // console.log({ response });
-
   $("#copy-template-btn").click(() => {
     selectAndCopyText("template-code");
     $("#copy-template-feedback").fadeIn(() => {
@@ -449,15 +181,6 @@ const setInputs = () => {
         }, 1000);
     })
   })
-
-  // const response = await fetch("https://api.co2signal.com/v1/latest?lon=6.8770394&lat=45.9162776", {
-  //   credentials: "include",
-  //   headers: {
-  //     'Content-Type': 'application/jsonp',
-  //     'auth-token': 'c5f38468eddd9edb'
-  //   }
-  // })
-  // console.log({ response });
 
 
 })(jQuery); // End of use strict

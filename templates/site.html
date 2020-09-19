@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-    
+  <link href="{{ url_for('static',filename='styles/style.css')}}" rel="stylesheet">
+  <link href="{{ url_for('static',filename='styles/bootstrap.css')}}" rel="stylesheet">
+  <link href="{{ url_for('static',filename='styles/all.css')}}" rel="stylesheet">
+  <link href="{{ url_for('static',filename='styles/css.css')}}" rel="stylesheet">
+  <link href="{{ url_for('static',filename='styles/try.css')}}" rel="stylesheet">
+  <link href="{{ url_for('static',filename='styles/nav.css')}}" rel="stylesheet">
+  <link href="{{ url_for('static',filename='styles/home.css')}}" rel="stylesheet">
+  <link href="{{ url_for('static',filename='styles/about.css')}}" rel="stylesheet">
+  <link href="{{ url_for('static',filename='styles/learn.css')}}" rel="stylesheet">
+  <script src="{{ url_for('static',filename='styles/bootstrap.js')}}"></script>
 
-  <link rel="stylesheet" href="/static/styles/style.css">
-  <link href="/static/styles/bootstrap.css" rel="stylesheet">
-  <link href="/static/styles/all.css" rel="stylesheet">
-  <link href="/static/styles/css.css" rel="stylesheet">
-  <link href="/static/styles/prism.css" rel="stylesheet">
-  <link href="/static/styles/grayscale.css" rel="stylesheet">
-  <link href="/static/styles/try.css" rel="stylesheet">
-  <link href="/static/styles/nav.css" rel="stylesheet">
-  <link href="/static/styles/home.css" rel="stylesheet">
-  <script src="/static/styles/bootstrap.js"></script>
+  
 <head>
 
   <meta charset="utf-8">
@@ -168,26 +168,26 @@
     <section id="Learn" class="learn-section">
     </section>
 </body>
-    <script>
-        // Add IE support xd
-        Array.prototype.forEach.call(document.querySelectorAll(".file-upload__button"), function(button){
-            const input = button.parentElement.querySelector('.file-upload__input');
-            const label = button.parentElement.querySelector('.file-upload__label');
-            const defaultLabelText = 'No file selected';
+<script>
+    // Add IE support xd
+    Array.prototype.forEach.call(document.querySelectorAll(".file-upload__button"), function(button){
+        const input = button.parentElement.querySelector('.file-upload__input');
+        const label = button.parentElement.querySelector('.file-upload__label');
+        const defaultLabelText = 'No file selected';
 
-            label.textContent = defaultLabelText;
+        label.textContent = defaultLabelText;
 
-            button.addEventListener('click', function() {
-                input.click();
-            })
-
-            input.addEventListener('change', function(){
-                const filenameList = Array.prototype.map.call(input.files, function(file){
-                    return file.name;
-                })
-
-                label.textContent = filenameList || defaultLabelText;
-                label.title = label.textContent;
-            })
+        button.addEventListener('click', function() {
+            input.click();
         })
-    </script>
+
+        input.addEventListener('change', function(){
+            const filenameList = Array.prototype.map.call(input.files, function(file){
+                return file.name;
+            })
+
+            label.textContent = filenameList || defaultLabelText;
+            label.title = label.textContent;
+        })
+    })
+</script>
