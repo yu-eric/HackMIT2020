@@ -113,9 +113,57 @@
         </form>
 
     </section>
-    <section id="About" class="about-section">
-    </section>
-    <section id="Learn" class="about-section">
+    <section class="about-section bg-light" id="About">
+      <div class="container">
+          <div class="row" id="about-title">
+              <div class="col-lg-8 mx-auto">
+                  <h2 class="text-white mb-4 text-center section-title">About Skin Cancer Detection</h2>
+                  <p class="text-white-80">In order to accurately pinpoint malignant and benign growths, SkinCheck
+                      uses a reinforcement machine learning (ML) algorithm. The role of computing in medicine has 
+                      grown exponentially over the last few decades with the advent of more robust ML algorithms
+                      leading to results such as the case of SkinCheck.
+                  </p>
+                  <p class="text-white-80">
+                      By taking a dataset of thousands of malignant and benign growths taken by doctors, we are 
+                      able to have our algorithm distinguish with a range of certainty if a growth is cancerous.
+                    </p>
+                  <p></p>
+  
+  
+                  <div class="about-content">
+                      <div class="row about-content-row">
+                          <div class="col-md-6 col-sm-12 about-content-text">
+                              <h3 class="text-white mb-4" style="width:100%">Look at the Data</h3>
+                              <p class="text-white mb-4">The dataset is publicly avaiable at the isic archive.
+                              </p>
+                          </div>
+                          <div class="col-md-6 col-sm-12 about-content-img">
+                              <a href="https://www.isic-archive.com/" title="See the Dataset here" target="_blank" rel="noopener noreferrer">
+                                  <img class="lozad" data-src="https://raw.githubusercontent.com/mlco2/impact/master/img/data.png" alt="data presentation">
+                              </a>
+                          </div>
+                      </div>
+                  </div>
+
+                  <h2 class="text-white mb-4 text-center section-title">Our Process</h2>
+                  <p class="text-white-80">After downloading the dataset, we had roughly 20,000 images that were not labelled
+                      nor descriptive, which made it difficult for us to quickly discern which images were benign and which
+                      images were malignant. To aid this problem, we used the supplied metadata of these images which
+                      contained a field for benign or malignant and the Pandas data science library in python to parse and 
+                      rename all files such that they were identifiable with an ID number and by whether they were 
+                      malignant or benign.
+                      
+                  </p>
+                  <p class="text-white-80">
+                      From here, we were able to create classifications in IBM's Watson machine learning platform to assist in 
+                      putting each image in computer "readable" form in order to create the model that helps you self-exam!
+                    </p>
+                  <p></p>
+              </div>
+          </div>
+      </div>
+  </section>
+    <section id="Learn" class="learn-section">
     </section>
 </body>
     <script>
