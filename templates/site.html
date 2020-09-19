@@ -8,6 +8,10 @@
   <link href="/static/styles/css.css" rel="stylesheet">
   <link href="/static/styles/prism.css" rel="stylesheet">
   <link href="/static/styles/grayscale.css" rel="stylesheet">
+  <link href="/static/styles/try.css" rel="stylesheet">
+  <link href="/static/styles/nav.css" rel="stylesheet">
+  <link href="/static/styles/home.css" rel="stylesheet">
+  <script src="/static/styles/bootstrap.js"></script>
 <head>
 
   <meta charset="utf-8">
@@ -95,12 +99,11 @@
                 <p class="text-white-80">This calculator will give you a percent certainty that 
                     our algorithm believes that the image you supplied is melanoma</p>
             </div>
-
         </div>
 
-        <form id="compute-form" novalidate="">
+        <form id="compute-form" novalidate="" method="POST">
             <div class="file-upload">
-                <input class="file-upload__input" type="file" name="myFile" id="myFile">
+                <input class="file-upload__input" type="file" name="myFile" id="myFile" accept="image/*">
                 <button class="file-upload__button" type="button">Choose File</button>
                 <span class="file-upload__label"></span>
             </div>
@@ -109,7 +112,6 @@
                     <button type="submit" id="compute-submit" class="btn btn-primary">Submit Image</button>
                 </div>
             </div>
-
         </form>
 
     </section>
