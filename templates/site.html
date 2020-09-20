@@ -111,12 +111,13 @@
           <button type="submit" id="compute-submit" class="btn btn-primary">Submit Image</button>
         </div>
       </div>
+      {% if done %}
+        <h1>Classification: {{ class_ }}</h1>
+        <h2>Measure: {{ measure }}</h2>
+      {% endif %}
     </form>
 </section>
-{% if done %}
-  <h1>Classification: {{ class_ }}</h1>
-  <h2>Measure: {{ measure }}</h2>
-{% endif %}
+
 <section id="Learn" class="learn-section">
     <div class="container">
       <div class="row" id="about-title">
