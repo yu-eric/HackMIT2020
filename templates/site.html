@@ -11,6 +11,7 @@
 <link href="{{ url_for('static',filename='styles/about.css') }}" rel="stylesheet">
 <link href="{{ url_for('static',filename='styles/learn.css') }}" rel="stylesheet">
 <script src="{{ url_for('static',filename='styles/bootstrap.js') }}"></script>
+<script src="https://d3js.org/d3.v5.min.js"></script>
 
 
 <head>
@@ -59,7 +60,7 @@
 <header class="home-section">
   <div id="home-container" class="container d-flex h-100 align-items-center">
     <div class="mx-auto text-center">
-      <h2 class="mx-auto mt"> Melanoma is the most common cancer, but it is also one of the most survivable.<br><br>
+      <h2 class="mx-auto mt"> Melanoma is one of the most common cancers, but it is also one of the most survivable.<br><br>
         We made a service to make your self-examinations easier:
       </h2>
 
@@ -73,7 +74,7 @@
           2
         </div>
         <div class="col-9 col-sm-6">
-          <p>Learn more about skin cancer prevention and statistics.</p>
+          <p>Learn more about melanoma prevention and statistics.</p>
         </div>
       </div>
       <a href="#Try" class="btn-primary btn js-scroll-trigger">Try our service here!</a>
@@ -111,8 +112,27 @@
         </div>
       </div>
     </form>
-
 </section>
+<section id="Learn" class="learn-section">
+    <div class="container">
+      <div class="row" id="about-title">
+        <div class="col-lg-8 mx-auto">
+          <h2 class="text-white mb-4 text-center section-title">What is skin cancer?</h2>
+          <p class="text-white-80">Skin cancer, like other cancers, is the abnormal growth of cells.
+            This can happen because of a variety of ways, and one of the leading causes of these
+            lesions is exposure to the sun. The UV rays of the sun help stimulate our skin cells
+            to create vitamin D, which is essential to life, but UV rays also damage cell DNA in
+            cases of large exposure.
+          </p>
+          <p class="text-white-80">
+            However, melanomas can appear on ones skin often with no prolonged exposure to the sun,
+            which is why it's ideal to self-examine all moles or lesions that are noticed.
+          </p>
+          <p></p>
+        </div>
+      </div>
+    </div>
+  </section>
 <section class="about-section bg-light" id="About">
   <div class="container">
     <div class="row" id="about-title">
@@ -128,6 +148,7 @@
           able to have our algorithm distinguish with a range of certainty if a growth is cancerous.
         </p>
         <p></p>
+        
 
 
         <div class="about-content">
@@ -140,7 +161,7 @@
             <div class="col-md-6 col-sm-12 about-content-img">
               <a href="https://www.isic-archive.com/" title="See the Dataset here" target="_blank"
                  rel="noopener noreferrer">
-                <img class="lozad" data-src="https://raw.githubusercontent.com/mlco2/impact/master/img/data.png"
+                <img data-src="https://raw.githubusercontent.com/mlco2/impact/master/img/data.png"
                      alt="data presentation">
               </a>
             </div>
@@ -165,26 +186,7 @@
     </div>
   </div>
 </section>
-<section id="Learn" class="learn-section">
-  <div class="container">
-    <div class="row" id="about-title">
-      <div class="col-lg-8 mx-auto">
-        <h2 class="text-white mb-4 text-center section-title">What is skin cancer?</h2>
-        <p class="text-white-80">Skin cancer, like other cancers, is the abnormal growth of cells.
-          This can happen because of a variety of ways, and one of the leading causes of these
-          lesions is exposure to the sun. The UV rays of the sun help stimulate our skin cells
-          to create vitamin D, which is essential to life, but UV rays also damage cell DNA in
-          cases of large exposure.
-        </p>
-        <p class="text-white-80">
-          However, melanomas can appear on ones skin often with no prolonged exposure to the sun,
-          which is why it's ideal to self-examine all moles or lesions that are noticed.
-        </p>
-        <p></p>
-      </div>
-    </div>
-  </div>
-</section>
+
 </body>
 <script>
     function readURL(input) {
