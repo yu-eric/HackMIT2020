@@ -76,7 +76,6 @@
           <p>Learn more about skin cancer prevention and statistics.</p>
         </div>
       </div>
-
       <a href="#Try" class="btn-primary btn js-scroll-trigger">Try our service here!</a>
     </div>
   </div>
@@ -104,7 +103,7 @@
         <input class="file-upload__input" type="file" onchange="readURL(this)" name="myFile" id="myFile" accept="image/*">
         <button class="file-upload__button" type="button">Choose File</button>
         <img id="myImage" src="" alt="">
-        <span class="file-upload__label"></span>
+        <span id="image-label" class="file-upload__label"></span>
       </div>
       <div class="form-row">
         <div class="form-group col-md-12">
@@ -198,6 +197,7 @@
                 image.style.height = "200px";
             };
             reader.readAsDataURL(input.files[0]);
+            document.querySelector("#image-label").remove()
         }
     }
 </script>
