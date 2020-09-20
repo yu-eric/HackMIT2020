@@ -1,8 +1,9 @@
+import os
+
 from google.cloud import automl
 from flask import Flask, request, render_template
 
-with open("modelID.txt", "r") as fo:
-    model_id = fo.read().strip()
+model_id = os.environ['MODEL_ID']
 
 app = Flask(__name__)
 app.static_folder = 'static'
