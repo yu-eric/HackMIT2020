@@ -1,0 +1,8 @@
+CancerType,Race,Age,5-yearRelativeSurvival%
+'Melanomas of the Skin','All Races','Ages <45','94.1'
+'Melanomas of the Skin','All Races','Ages <65','91.8'
+'Melanomas of the Skin','All Races','Ages 45-54','91.4'
+'Melanomas of the Skin','All Races','Ages 55-64','90.1'
+'Melanomas of the Skin','All Races','Ages 65+','86.8'
+'Melanomas of the Skin','All Races','Ages 65-74','89.1'
+'Melanomas of the Skin','All Races','Ages 75+','84.4'
