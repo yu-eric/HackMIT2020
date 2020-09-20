@@ -113,6 +113,10 @@
       </div>
     </form>
 </section>
+{% if done %}
+  <h1>Classification: {{ class_ }}</h1>
+  <h2>Measure: {{ measure }}</h2>
+{% endif %}
 <section id="Learn" class="learn-section">
     <div class="container">
       <div class="row" id="about-title">
@@ -133,6 +137,7 @@
       </div>
     </div>
   </section>
+
 <section class="about-section bg-light" id="About">
   <div class="container">
     <div class="row" id="about-title">
