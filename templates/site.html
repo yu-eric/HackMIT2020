@@ -108,7 +108,7 @@
       </div>
       <div class="form-row">
         <div class="form-group col-md-12">
-          <button type="submit" id="compute-submit" class="btn btn-primary">Submit Image</button>
+          <button disabled="disabled" type="submit" id="compute-submit" class="btn btn-primary">Submit Image</button>
         </div>
       </div>
       {% if done %}
@@ -194,6 +194,14 @@
 </section>
 
 </body>
+{% if done %}
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+      {#document.querySelector("#compute-form").scrollTop = "10px"#}
+      window.scrollTo(0, 800);
+  })
+</script>
+{% endif %}
 <script>
     function readURL(input) {
         if (input.files && input.files[0]) {
@@ -205,7 +213,8 @@
                 image.style.height = "200px";
             };
             reader.readAsDataURL(input.files[0]);
-            document.querySelector("#image-label").remove()
+            document.querySelector("#image-label").remove();
+            document.querySelector("#compute-submit").removeAttribute("disabled");
         }
     }
 </script>
