@@ -1,5 +1,5 @@
-.learn-section{background:-webkit-gradient(linear,left top,left bottom,color-stop(0,#394a5c),color-stop(75%,rgba(12,31,55,.9)),to(#0c1f37)),url(https://raw.githubusercontent.com/mlco2/impact/master/img/lake.jpeg);
-    background:linear-gradient(to bottom,#394a5c 0,rgba(12,31,55,.9) 75%,#0c1f37 100%),url(https://raw.githubusercontent.com/mlco2/impact/master/img/lake.jpeg);
+.learn-section{background:-webkit-gradient(linear,left top,left bottom,color-stop(0,#394a5c),color-stop(75%,rgba(12,31,55,.9)),to(#0c1f37));
+    background:linear-gradient(to bottom,#1a3250 0,rgba(12,31,55,.9) 75%,#0c1f37 100%);
     background-position:center;background-repeat:no-repeat;background-attachment:scroll;
     background-size:cover;padding:4rem 0;
     text-align:center
