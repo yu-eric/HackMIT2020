@@ -12,7 +12,10 @@ app.static_folder = 'static'
 def home_page():
     # from flask import request
     if request.method == 'GET':
-        return render_template('site.html')
+        context = {
+            "done": False
+        }
+        return render_template('site.html', **context)
     else:
         # get image content from POST request inputs
         file = request.files["myFile"]
@@ -43,8 +46,9 @@ def home_page():
 
         context = {
             "done": True,
+            "guess_mal": class_ == "Malignant",
             "class_": class_,
-            "measure": measure
+            "measure": '{:.2%}'.format(measure)
         }
         return render_template('site.html', **context)
 
